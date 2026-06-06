@@ -126,3 +126,28 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log('Sunucu ' + PORT + ' portunda calisiyor');
 });
+async function webhookKaydet() {
+  try {
+    const response = await axios.post(
+      'https://serishop-3.myshopify.com/admin/api/2026-04/webhooks.json',
+      {
+        webhook: {
+          topic: 'orders/paid',
+          address: 'https://handsome-mindfulness-production.up.railway.app/webhook/shopify',
+          format: 'json'
+        }
+      },
+      {
+        headers: {
+          'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    console.log('Webhook kaydedildi:', response.data);
+  } catch (err) {
+    console.log('Webhook zaten kayitli veya hata:', err.response?.data || err.message);
+  }
+}
+
+webhookKaydet();
