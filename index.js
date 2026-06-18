@@ -109,7 +109,7 @@ app.post('/kelime-kontrol', async (req, res) => {
 
     if (oyun.rows[0].atanan_kelime === kelime.toUpperCase()) {
       await pool.query('UPDATE musteri_oyun SET odul_kullanildi = true WHERE id = $1', [oyun.rows[0].id]);
-      res.json({ basarili: true, mesaj: 'Tebrikler! 200 TL ve alti urun bedava!' });
+      res.json({ basarili: true, mesaj: 'Tebrikler! 200 TL ve alti urun ücretsiz!' });
     } else {
       res.json({ basarili: false, mesaj: 'Yanlis kelime!' });
     }
